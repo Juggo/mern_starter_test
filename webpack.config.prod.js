@@ -12,7 +12,7 @@ module.exports = {
 
   entry: {
     app: [
-      './client/index.js',
+      __dirname + '/client/index.js',
     ],
     vendor: [
       'react',
