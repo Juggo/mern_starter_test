@@ -1,6 +1,26 @@
 import Post from './models/post';
+import ShopList from './models/shopList';
 
 export default function () {
+  ShopList.count().exec((err, count) => {
+    if (count > 0) {
+      return;
+    }
+
+    const content1 = ['Eggs', 'Bacon', 'Milk', 'Bread'];
+
+    const content2 = ['Tomatoes', 'Salad', 'Mozzarella', 'Olive oil'];
+
+    const shopList1 = new ShopList({ name: 'Basic list', slug: 'basic-list', cuid: 'cikqgkv4q01ck7453ualdn3hd', content: content1 });
+    const shopList2 = new ShopList({ name: 'Salad list', slug: 'salad-list', cuid: 'cikqgkv4q01ck7453ualdn3hf', content: content2 });
+
+    ShopList.create([shopList1, shopList2], (error) => {
+      if (!error) {
+        // console.log('ready to go....');
+      }
+    });
+  });
+  
   Post.count().exec((err, count) => {
     if (count > 0) {
       return;

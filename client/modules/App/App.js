@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Import Style
-import styles from './App.css';
+//import styles from './App.css';
 
 // Import Components
 import Helmet from 'react-helmet';
@@ -47,13 +47,17 @@ export class App extends Component {
                 content: 'width=device-width, initial-scale=1',
               },
             ]}
+            link={[
+              {"rel": "stylesheet", "href": "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"},
+              {"rel": "stylesheet", "href": "https://fonts.googleapis.com/icon?family=Material+Icons"}
+            ]}
           />
           <Header
             switchLanguage={lang => this.props.dispatch(switchLanguage(lang))}
             intl={this.props.intl}
             toggleAddPost={this.toggleAddPostSection}
           />
-          <div className={styles.container}>
+          <div className="container">
             {this.props.children}
           </div>
           <Footer />
