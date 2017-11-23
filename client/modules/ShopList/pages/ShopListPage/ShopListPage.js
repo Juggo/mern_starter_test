@@ -2,41 +2,35 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
 // Import Form Style
-import styles from '../../components/PostCreateWidget/PostCreateWidget.css';
+//import styles from '../../components/PostCreateWidget/PostCreateWidget.css';
 
 // Import Components
-import PostList from '../../components/PostList';
+import ShopListList from '../../components/ShopListList';
 import PostCreateWidget from '../../components/PostCreateWidget/PostCreateWidget';
+import ShopListIntro from '../../components/ShopListIntro/ShopListIntro';
+import ShopListSearch from '../../components/ShopListSearch/ShopListSearch';
 
 // Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest, fetchPostsByFilter } from '../../PostActions';
 import { toggleAddPost } from '../../../App/AppActions';
+import { addPostRequest, fetchPosts, deletePostRequest, fetchPostsByFilter } from '../../PostActions';
+import { addShopListRequest, fetchShopLists, fetchShopListsByFilter } from '../../ShopListActions';
 
 // Import Selectors
 import { getShowAddPost } from '../../../App/AppReducer';
-import { getPosts } from '../../PostReducer';
+import { getShopLists } from '../../ShopListReducer';
 
-class PostListPage extends Component {
+class ShopListPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPosts());
+    this.props.dispatch(fetchShopLists());
   }
 
-  handleDeletePost = post => {
-    if (confirm('Do you want to delete this post')) { // eslint-disable-line
-      this.props.dispatch(deletePostRequest(post));
-    }
+  handleSearchLists = name => {
+    this.props.dispatch(fetchShopListsByFilter(name))
   };
 
   handleAddPost = (name, title, content) => {
     this.props.dispatch(toggleAddPost());
     this.props.dispatch(addPostRequest({ name, title, content }));
-  };
-  
-  fetchPostsByFilter = () => {
-    if (this.refs.title.value) {
-      
-      this.props.dispatch(fetchPostsByFilter(this.refs.title.value, this.refs.dateFrom.value, this.refs.dateTo.value));
-    }
   };
 
   render() {
@@ -44,37 +38,38 @@ class PostListPage extends Component {
       <div>
         <PostCreateWidget addPost={this.handleAddPost} showAddPost={this.props.showAddPost} />
         
-
+        <ShopListIntro />
         
-        <PostList handleDeletePost={this.handleDeletePost} posts={this.props.posts} />
+        <ShopListSearch handleSearchLists={this.handleSearchLists} />
+        
+        <ShopListList shopLists={this.props.shopLists} />
       </div>
     );
   }
 }
 
 // Actions required to provide data for this component to render in sever side.
-PostListPage.need = [() => { return fetchPosts(); }];
+ShopListPage.need = [() => { return fetchShopLists(); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
     showAddPost: getShowAddPost(state),
-    posts: getPosts(state),
+    shopLists: getShopLists(state),
   };
 }
 
-PostListPage.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({
+ShopListPage.propTypes = {
+  shopLists: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    content: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
   showAddPost: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-PostListPage.contextTypes = {
+ShopListPage.contextTypes = {
   router: React.PropTypes.object,
 };
 
-export default connect(mapStateToProps)(PostListPage);
+export default connect(mapStateToProps)(ShopListPage);

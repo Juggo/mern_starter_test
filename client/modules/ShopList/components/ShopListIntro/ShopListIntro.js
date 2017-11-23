@@ -1,37 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 
-// Import Components
-import PostListItem from './PostListItem/PostListItem';
+// Import Style
+import styles from './ShopListIntro.css';
 
-//function PostList(props) {
-class PostList extends Component {
-  
+class ShopListIntro extends Component {
   render() {
     return (
-      <div className="listView">
-        {
-          this.props.posts.map(post => (
-            <PostListItem
-              post={post}
-              key={post.cuid}
-              onDelete={() => this.props.handleDeletePost(post.cuid)}
-            />
-          ))
-        }
+      <div>
+        <h1 className={`center-align red-text lighten-2 ${styles['h1-font-size']}`}>Create your own shopping list!</h1>
+        <div className={`row red-text lighten-1 ${styles['space-top']}`}>
+          <div className="col s4 center-align"><i className="large material-icons">dashboard</i></div>
+          <div className="col s4 center-align"><i className="large material-icons">playlist_add</i></div>
+          <div className="col s4 center-align"><i className="large material-icons">done_all</i></div>
+        </div>
+        <div className={`row black-text lighten-1 ${styles['space-bottom']}`}>
+          <div className="col s4 center-align">Browse through existing lists</div>
+          <div className="col s4 center-align">Create a list of your choice</div>
+          <div className="col s4 center-align">Tick items during shopping</div>
+        </div>
       </div>
     );
   }
 }
 
-PostList.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    cuid: PropTypes.string.isRequired,
-  })).isRequired,
-  handleDeletePost: PropTypes.func.isRequired,
-};
-
-export default PostList;
+export default ShopListIntro;

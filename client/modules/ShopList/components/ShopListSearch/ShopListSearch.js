@@ -1,37 +1,32 @@
 import React, { Component, PropTypes } from 'react';
 
-// Import Components
-import PostListItem from './PostListItem/PostListItem';
-
-//function PostList(props) {
-class PostList extends Component {
+class ShopListSearch extends Component {
+  handleSearchChange = e => {
+    e.preventDefault(); 
+    this.props.handleSearchLists(e.target.value);
+  };
   
   render() {
     return (
-      <div className="listView">
-        {
-          this.props.posts.map(post => (
-            <PostListItem
-              post={post}
-              key={post.cuid}
-              onDelete={() => this.props.handleDeletePost(post.cuid)}
-            />
-          ))
-        }
+      <div>
+        <div className="row">
+          <h2 className='center-align red-text lighten-1'>Search shopping lists</h2>
+        </div>
+        <div className="row">
+          <form>
+            <div className="input-field col s6 offset-s3">
+              <input id="search" type="text" className="validate" onChange={this.handleSearchChange}/>
+              <label htmlFor="search">Enter a name</label>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
 }
 
-PostList.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    cuid: PropTypes.string.isRequired,
-  })).isRequired,
-  handleDeletePost: PropTypes.func.isRequired,
+ShopListSearch.propTypes = {
+  handleSearchLists: PropTypes.func.isRequired,
 };
 
-export default PostList;
+export default ShopListSearch;

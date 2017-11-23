@@ -1,20 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 
 // Import Components
-import PostListItem from './PostListItem/PostListItem';
+import ShopListItem from './ShopListItem/ShopListItem';
 
-//function PostList(props) {
-class PostList extends Component {
-  
+class ShopListList extends Component {
   render() {
     return (
       <div className="listView">
         {
-          this.props.posts.map(post => (
-            <PostListItem
-              post={post}
-              key={post.cuid}
-              onDelete={() => this.props.handleDeletePost(post.cuid)}
+          this.props.shopLists.map(shopList => (
+            <ShopListItem
+              shopList={shopList}
+              key={shopList.cuid}
             />
           ))
         }
@@ -23,15 +20,13 @@ class PostList extends Component {
   }
 }
 
-PostList.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({
+ShopListList.propTypes = {
+  shopLists: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    content: PropTypes.arrayOf(PropTypes.string).isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
-  })).isRequired,
-  handleDeletePost: PropTypes.func.isRequired,
+  })).isRequired
 };
 
-export default PostList;
+export default ShopListList;
